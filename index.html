@@ -198,7 +198,31 @@ $("open-premium").addEventListener("click",()=>{premiumModal.classList.add("open
 $("close-premium").addEventListener("click",closePremium);
 premiumModal.addEventListener("click",e=>{if(e.target===premiumModal)closePremium()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&premiumModal.classList.contains("open"))closePremium()});
-$("subscribe-premium").addEventListener("click",()=>{$("premium-info").textContent="Les abonnements seront disponibles une fois le système de paiement configuré. Aucun paiement n’a été effectué."});
+$("#subscribe-premium").addEventListener("click", async () => {
+  const info = $("#premium-info");
+  info.textContent = "Connexion à Stripe…";
+
+  try {
+    const response = await fetch(
+      "https://numocalc-api.colin-emile060711.workers.dev/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.url) {
+      throw new Error("Impossible de démarrer le paiement.");
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    info.textContent = error.message;
+  }
+});
 </script>
 </body>
 </html>
