@@ -198,8 +198,8 @@ $("open-premium").addEventListener("click",()=>{premiumModal.classList.add("open
 $("close-premium").addEventListener("click",closePremium);
 premiumModal.addEventListener("click",e=>{if(e.target===premiumModal)closePremium()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&premiumModal.classList.contains("open"))closePremium()});
-$("#subscribe-premium").addEventListener("click", async () => {
-  const info = $("#premium-info");
+$("subscribe-premium").addEventListener("click", async () => {
+  const info = $("premium-info");
   info.textContent = "Connexion à Stripe…";
 
   try {
